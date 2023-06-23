@@ -32,6 +32,7 @@ import "../../App.css"
         <button
           onClick={() => {
             dispatch(authSlice.actions.logout());
+            navigate("/login")
           }}
         >
           Logout
