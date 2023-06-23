@@ -48,3 +48,9 @@
   border-top: 4px solid purple;
 
 }
+
+.saved_values span{
+  font-weight: bold;
+  font-size: 20px;
+  
+}

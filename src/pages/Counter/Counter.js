@@ -19,10 +19,11 @@ import "../../App.css"
     const [currentDate, setCurrentDate] = useState(new Date());
     const dataDate = {
         counted:counterState,
+        fullName:authState.fullName,
         datum:currentDate
     }
 
-
+    console.log(authState)
     console.log(dataDate.datum)
 
   return (
@@ -70,8 +71,9 @@ import "../../App.css"
               <div key={index} className="saved_values">
                {console.log("item",item)}
 
-               <p>Brojac:{item.counted.counter}</p>
-               <p>Datum Sacuvanog podatka:{item.datum.toLocaleString('en-US', { timeZone: 'UTC' })}</p>
+               <p>Brojac:<span>{item.counted.counter}</span></p>
+               <p>Korisnik koji je sacuvao Podatak:<span>{item.fullName}</span></p>
+               <p>Datum Sacuvanog podatka:<span>{item.datum.toLocaleString('en-US', { timeZone: 'UTC' })}</span></p>
               </div>
 
 
