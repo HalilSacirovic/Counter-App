@@ -36,3 +36,15 @@
     transform: rotate(360deg);
   }
 }
+
+
+
+.saved{
+  background-color: aqua;
+  padding:20px
+}
+
+.saved_values{
+  border-top: 4px solid purple;
+
+}

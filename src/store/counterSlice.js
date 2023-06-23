@@ -16,8 +16,8 @@ export const counterSlice = createSlice({
     
     saveCounter(state,actions)
     {
-      const counted = state.counter;
-      state.saved.push(counted);
+      const date = actions.payload 
+      state.saved.push(date);
       return state;
     },
 

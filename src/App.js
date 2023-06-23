@@ -12,7 +12,7 @@ const NavigationRoutes = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    const token = localStorage.getItem("authToken");
+    const token = localStorage.getItem("auth_token");
     if (token) {
       const decoded = jwtDecode(token);
       dispatch(authSlice.actions.setData(decoded));

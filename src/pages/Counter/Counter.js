@@ -1,16 +1,49 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import {counterSlice} from "../../store/counterSlice"
+import { authSlice } from "../../store/authSlice";
+import { useNavigate } from "react-router-dom";
+import "../../App.css"
 
 
  const Counter = () => {
+
  
     const counterState = useSelector((state)=>state.counter);
+    const authState = useSelector((state) => state.auth);
     console.log(counterState.counter)
     const dispatch = useDispatch();
+    const navigate = useNavigate()
+    console.log(authState)
+ 
+    const [currentDate, setCurrentDate] = useState(new Date());
+    const dataDate = {
+        counted:counterState,
+        datum:currentDate
+    }
+
+
+    console.log(dataDate.datum)
 
   return (
     <div className='div'>
+      {authState.id ? (
+        <button
+          onClick={() => {
+            dispatch(authSlice.actions.logout());
+          }}
+        >
+          Logout
+        </button>
+      ) : (
+        <button
+          onClick={() => {
+            navigate("/login");
+          }}
+        >
+          Login
+        </button>
+      )}
     <div className='counter'>
         <p>Counter : {counterState.counter}</p>
         <button onClick={()=>{
@@ -20,10 +53,33 @@ import {counterSlice} from "../../store/counterSlice"
         <button onClick={()=>{
             dispatch(counterSlice.actions.clearCounter())
         }}>Reset Number</button>
-        <button onClick={()=>{
-            dispatch(counterSlice.actions.saveCounter())
+    {authState.id ?(<button onClick={()=>{
+            dispatch(counterSlice.actions.saveCounter(dataDate))
             console.log(counterState.saved)
-        }}>Save Number</button>
+        }}>Save Number</button>)
+    :
+    (<button >Save Number</button>
+    )}
+        
+    </div>
+
+    <div className="saved">
+    {
+        counterState.saved.map((item,index)=>{
+            return(
+              <div key={index} className="saved_values">
+               {console.log("item",item)}
+
+               <p>Brojac:{item.counted.counter}</p>
+               <p>Datum Sacuvanog podatka:{item.datum.toLocaleString('en-US', { timeZone: 'UTC' })}</p>
+              </div>
+
+
+            )
+        })
+    }
+
+
     </div>
 
     </div>
