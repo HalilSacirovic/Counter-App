@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./Login.css";
 import { Formik } from "formik";
 import * as yup from "yup";
 import { useNavigate } from "react-router-dom";
 import jwtDecoded from 'jwt-decode';
+
 
 const loginSchema = yup.object({
   email: yup.string().required("Nedostaje email").email("Email nije dobar"),
@@ -14,12 +15,23 @@ const loginSchema = yup.object({
 
 const Login = () => {
   const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(false);
+
+  if (isLoading) {
+    return (
+      <div className="edit-quote-wrapper">
+        <h1>Loading...</h1>
+      </div>
+    );
+  }
+
 
   return (
     <div className="login-wrapper">
       <Formik
         initialValues={{ email: "", password: "" }}
         onSubmit={(values, actions) => {
+          setIsLoading(true);
           fetch("https://js-course-server.onrender.com/user/login", {
             method: "POST",
             body: JSON.stringify(values),
@@ -30,6 +42,7 @@ const Login = () => {
             .then((res) => res.json())
             .then((data) => {
               if (data.token) {
+                setIsLoading(false)
                 const decode = jwtDecoded(data.token);
                 console.log(decode)
                 localStorage.setItem("auth_token", data.token);
